@@ -4,7 +4,9 @@ from .utils import render_movie
 from tqdm import tqdm
 
 
-def coevolve(board, all_agents, timedraw, resource_max, total_timesteps, do_movie=True, do_random_choice=False, log=False):
+def coevolve(board, all_agents, timedraw, resource_max, total_timesteps,
+             do_movie=True, do_random_choice=False, log=False,
+             img_path="./output/Field_Drive.gif"):
 
     t = 0
     is_done = False  # This will never be called for now.
@@ -26,6 +28,12 @@ def coevolve(board, all_agents, timedraw, resource_max, total_timesteps, do_movi
                     t, state, action, rew, obs))
 
     if do_movie:
-        render_movie(timedraw, len(all_agents), board.POSITION_X, board.POSITION_Y,
-                     board.ENVIRONMENT_INFLUENCED_HISTORY, board.ENVIRONMENT_SIZE_X, board.ENVIRONMENT_SIZE_Y,
-                     board.AGENT_RADIUS, resource_max)
+        render_movie(timedraw, len(all_agents),
+                    board.POSITION_X,
+                    board.POSITION_Y,
+                    board.ENVIRONMENT_INFLUENCED_HISTORY,
+                    board.ENVIRONMENT_SIZE_X,
+                    board.ENVIRONMENT_SIZE_Y,
+                    board.AGENT_RADIUS,
+                    resource_max,
+                    img_path)

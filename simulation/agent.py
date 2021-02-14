@@ -14,12 +14,12 @@ class NeuralNetwork(nn.Module):
         if hidden_dim is None:
             hidden_dim = in_dim*2
         self.l1 = nn.Linear(in_dim, hidden_dim)
-        self.ac1 = nn.ReLU()
+        self.ac1 = nn.LeakyReLU()
         self.l2 = nn.Linear(hidden_dim, out_dim)
         self.ac2 = nn.Softmax(dim=0)
 
     def forward(self, x):
-        x = self.ac1(self.l1(x*1.0))
+        x = self.ac1(self.l1(x.float()))
         return self.ac2(self.l2(x))
 
 
@@ -38,8 +38,8 @@ class Agent():
     def __init__(self, pos_x, pos_y, n_dof=6, lr=0.0001, rho=0.9):
         super(Agent, self).__init__()
         self._n_dof = n_dof
-        self._model = NeuralNetwork(
-            in_dim=self._n_dof, out_dim=self._n_dof - 1)
+        self._model = NeuralNetwork(in_dim=self._n_dof,
+                                    out_dim=self._n_dof - 1)
         self._optimizer = optim.SGD(
             self._model.parameters(), lr=lr, momentum=rho)
         self._loss = nn.MSELoss()
