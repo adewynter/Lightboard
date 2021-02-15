@@ -22,7 +22,10 @@ def set_seeds(seed=123):
     random.seed(seed)
 
 
-def generate_positions(number_of_agents, environment_size_x, environment_size_y, environment, total_timestep, resource_max):
+def generate_positions(number_of_agents,
+                       environment_size_x,
+                       environment_size_y,
+                       environment, total_timestep, resource_max):
     """
     Define a function that generating new positions
     """
@@ -46,9 +49,17 @@ def generate_positions(number_of_agents, environment_size_x, environment_size_y,
     return position_x, position_y, position_x_coords, position_y_coords
 
 
-def render_movie(timedraw, number_of_agents, position_x, position_y,
-                 environment, environment_size_x, environment_size_y, agent_radius,
-                 resource_max, img_path="./output/Field_Drive.gif"):
+def render_movie(timedraw,
+                 number_of_agents,
+                 position_x,
+                 position_y,
+                 environment,
+                 environment_size_x,
+                 environment_size_y,
+                 agent_radius,
+                 resource_max, 
+                 do_random_choice,
+                 img_path="./output/Field_Drive.gif"):
     """
     Render an array as a gif.
     """
@@ -62,15 +73,23 @@ def render_movie(timedraw, number_of_agents, position_x, position_y,
                                       environment_size_x,
                                       environment_size_y,
                                       agent_radius,
-                                      resource_max)
+                                      resource_max,
+                                      do_random_choice)
         whole_system.append(system)
 
     imageio.mimsave(img_path, whole_system, fps=10)
 
 
-def generate_wholesystem(timedraw, number_of_agents, position_x, position_y,
-                         environment, environment_size_x, environment_size_y, agent_radius,
-                         resource_max):
+def generate_wholesystem(timedraw,
+                         number_of_agents,
+                         position_x,
+                         position_y,
+                         environment,
+                         environment_size_x,
+                         environment_size_y,
+                         agent_radius,
+                         resource_max,
+                         do_random_choice):
     """
     Draw the whole system, agents and the environment landscape
     """
@@ -86,7 +105,8 @@ def generate_wholesystem(timedraw, number_of_agents, position_x, position_y,
         ax.set_ylim(-0.5, environment_size_y-0.5)
         ax.set_xticks([])
         ax.set_yticks([])
-        plt.title('Random Walk Simulation' +
+        pfix = "Random Walk" if do_random_choice else "NN"
+        plt.title(pfix + ' Simulation' +
                   '\n at time = '+str(timedraw)+'', fontsize=32)
     fig.canvas.draw()
     image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')

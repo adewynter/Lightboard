@@ -36,4 +36,5 @@ def coevolve(board, all_agents, timedraw, resource_max, total_timesteps,
                     board.ENVIRONMENT_SIZE_Y,
                     board.AGENT_RADIUS,
                     resource_max,
+                    do_random_choice,
                     img_path)
